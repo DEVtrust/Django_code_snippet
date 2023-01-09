@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div id="booking" class="section">
+        <div class="col align-self-end" style="padding : 75px">
+            <a class="login-trigger"  href="/show2/">ALL MEETING</a>
+        </div>
+        <h1>{{ new1 }}</h1>
+        <h1 id="demo"></h1>
+        <div class="col-sm-12">
+            <p id="demo" class="test">
+            </p>
+        </div>
+        <div class="container1">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a class="login-trigger"
+                        onclick="return confirm('Are you sure you want to Meeting Cancel ?')" href="/cancel/{{new1.id}}"
+                       data-target="#login1"
+                       data-toggle="modal">CANCEL MEETING</a>
+                </div>
+                <div class="col-sm-6">
+                    <a class="login-trigger"
+                       
+                       data-target="#login2"
+                       data-toggle="modal">SCHEDULE MEETING</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h1>Upcoming Meetings</h1>
+            <div class="col-sm-6">
+                {% for new in room1 %}
+                    <div class="col align-self-center">
+                        <div class="card"
+                             style="width:1000px;
+                                    color:white;
+                                    font-weight: 500;
+                                    padding-top:20px;
+                                    margin-left:400px;
+                                    font: 25px Arial, Helvetica, sans-serif;">
+                            <div class="card-body">
+                                <!-- <h4 class="card-title">{{new.task}}</h4> -->
+                                <p class="card-text">
+                                    <strong>TASK : {{ new.task }}</strong>
+                                </h2>
+                                {{ new.start }}-{{ new.end }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-------POPup-->
+    <div id="login2" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button data-dismiss="modal" class="close">&times;</button>
+                    <h4>Login</h4>
+                    <form method="POST" action="{% url 'login'%}">
+                        {% csrf_token %}
+                        <input type="text"
+                               name="Email"
+                               class="username form-control"
+                               placeholder="Email"/>
+                        <input type="password"
+                               name="password"
+                               class="password form-control"
+                               placeholder="password"/>
+                        <input class="btn login" type="submit" value="Login" />
+                    </form>
+                    {% if messages %}
+
+
+						<div class="messages">
+
+							{% for message in messages %}
+							<center>
+								<div class="container-fluid p-0">
+									<div class="alert {{ message.tags }} alert-dismissible" role="alert">
+
+										{{ message }}
+									</div>
+								</div>
+							</center>
+							{% endfor %}
+						</div>
+						{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Pop upend-->
+
+    <!--Pop-up cancel-->
+    <div id="login1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button data-dismiss="modal" class="close">&times;</button>
+                    <h4>Login</h4>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text"
+                               name="Email"
+                               class="username form-control"
+                               placeholder="Email"/>
+                        <input type="password"
+                               name="password"
+                               class="password form-control"
+                               placeholder="password"/>
+                        <input class="btn login" type="submit" value="Login" />
+                    </form>
+                    {% if messages %}
+
+
+						<div class="messages">
+
+							{% for message in messages %}
+							<center>
+								<div class="container-fluid p-0">
+									<div class="alert {{ message.tags }} alert-dismissible" role="alert">
+
+										{{ message }}
+									</div>
+								</div>
+							</center>
+							{% endfor %}
+						</div>
+						{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    function myFunction() {
+    var x = document.getElementById("repeatedbox");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    }else {
+        x.style.display = "block";
+    }
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+        // Set the date we're counting down to
+        var countDownDate = new Date({{central.year}},{{central.month}},{{central.day}},{{central.hour}},{{central.minute}},{{central.second}}).getTime();
+        
+        
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+        
+          // Get today's date and time
+          var now = new Date().getTime();
+        
+          // Find the distance between now and the count down date
+          var distance = countDownDate - now;
+         
+          // Time calculations for days, hours, minutes and seconds
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+          // Display the result in the element with id="demo"
+        //   document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+        //   + minutes + "m " + seconds + "s ";
+          document.getElementById("demo").innerHTML = "NEXT SLOT AVAILABLE: "+ hours + "H "
+          + minutes + "M " + seconds + "S ";
+        
+          // If the count down is finished, write some text
+          if (hours == 0 && minutes==0 && seconds==0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "SLOT AVAILABLE";
+          }
+        }, 1000);
+</script>
+<script>
+        $(function(){
+            jQuery.validator.addMethod("greaterThan", 
+            function(value, element, params) {
+
+                if (!/Invalid|NaN/.test(new Date(value))) {
+                    return new Date(value) >= new Date($(params).val());
+                }
+
+                return isNaN(value) && isNaN($(params).val()) 
+                    || (Number(value) > Number($(params).val())); 
+            },'Must be greater than {0}.');
+            
+          var $registrationForm = $('#registration');
+          if($registrationForm.length){
+          $registrationForm.validate({
+             rules:{ 
+                Email: {
+                      required: true,
+                      email:true
+                      
+                      
+                  },
+                  task: {
+                      required:  true,
+                    
+                    
+                  },
+                  Description: {
+                      required:  true,
+                    
+                    
+                  },
+                  start: {
+                      required:  true,
+                    
+                    
+                  },
+                  end: {
+                      required:  true,
+                      greaterThan: "#start"
+                      
+                    
+                    
+                  },
+                  starttime: {
+                      required:  true,
+                    
+                    
+                  },
+                  endtime: {
+                      required:  true,
+                    
+                      
+                    
+                    
+                  },
+               },
+            
+          })
+          }
+        })
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}SCHEDULES{% endblock %}
+{% block content %}
+  <div id="booking" class="section">
+    <div class="col align-self-end" style="padding : 75px">
+      <a class="login-trigger"  href="/test">Dashboard</a>
+    </div>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1 id="head">{{ ROOM }}</h1>
+            <table class="styled-table" id="datatable">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">START TIME</th>
+                  <th scope="col">END TIME</th>
+                  <th scope="col">EMAIL</th>
+                  <th scope="col">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in data %}
+                  <tr class="active-row">
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ data.task }}</td>
+                    <td>{{ data.Description }}</td>
+                    <td>{{ data.start }}</td>
+                    <td>{{ data.end }}</td>
+                    <td>{{ data.Email }}</td>
+                    <td>
+                      <a class="btn btn-info" href="/delete/{{ data.id }}" role="button"><i class="fa fa-close"></i></a>
+                      <a class="btn btn-danger"
+                         href="/deleteall/{{ data.submeet }}"
+                         role="button"><i class="fa fa-trash"></i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+                  $(document).ready(function () {
+                    $('#datatable').dataTable(
+                      {
+                        "pageLength": 7,
+                        
+                      });
+                  });
+                
+                
+        </script>
+      {% endblock %}
